@@ -20,6 +20,12 @@ python bin/qrembed.py [-h] [-o OUTPUT] [--method {qr,datamatrix}] [--chunked] [-
 - Uses the largest QR code size and lowest error correction to maximize data capacity.
 - If the file is too large to fit in a QR code, an error will be raised unless chunked mode is used.
 
+Be warned--this doen't scale super well: a 10kB file took 4 (dense) QR codes, and I expect this is linear. But if your only data storage medium is physical QR codes, I guess this could be useful?
+
+## Decoding
+
+What seemed to work for me as to use [Binary Eye](https://github.com/markusfisch/BinaryEye) to download the QR codes directly to files, saving as FILENAME.7z.001 etc. (note the two periods). Then I could use [7Zipper](https://play.google.com/store/apps/details?id=org.joa.zipperplus7&hl=en-US&pli=1) to extract by starting with the 001th.
+
 ## Progress
 
 - CLI can encode any file or directory as a series of QR or DataMatrix codes, using 7z volumes for multipart support.
