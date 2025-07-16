@@ -99,7 +99,7 @@ def main():
     logging.basicConfig(level=getattr(logging, loglevel, logging.INFO))
     parser = argparse.ArgumentParser(description="Embed a file or directory in QR/DataMatrix images using 7z volumes.")
     parser.add_argument('input_path', help='Path to the file or directory to embed')
-    parser.add_argument('-o', '--output', help='Output image file (default: <input>.png)')
+    parser.add_argument('-o', '--output', help='Output image file (default: <input>.qr.png)')
     parser.add_argument('--method', choices=['qr', 'datamatrix'], default='qr', help='Encoding method: qr or datamatrix (default: qr)')
     parser.add_argument('--chunked', action='store_true', help='Enable chunked archive mode (split file/dir into 7z volumes for multiple codes)')
     parser.add_argument('--chunk-size', type=int, default=2900, help='Chunk size in bytes (default: 2900 for QR, required for --chunked)')

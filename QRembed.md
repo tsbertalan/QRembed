@@ -9,7 +9,7 @@ python bin/qrembed.py [-h] [-o OUTPUT] [--method {qr,datamatrix}] [--chunked] [-
 ```
 
 - `input_path`: Path to the file or directory to embed
-- `-o OUTPUT, --output OUTPUT`: Output image file (default: <input>.png)
+- `-o OUTPUT, --output OUTPUT`: Output image file (default: INPUT.qr.png)
 - `--method {qr,datamatrix}`: Encoding method: qr or datamatrix (default: qr)
 - `--chunked`: Enable chunked archive mode (split file/dir into 7z volumes for multiple codes)
 - `--chunk-size CHUNK_SIZE`: Chunk size in bytes (default: 2900 for QR, required for --chunked)
