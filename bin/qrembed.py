@@ -45,7 +45,7 @@ def file_to_qr(input_file, output_file=None, compress=True):
     qr.make(fit=False)
     img = qr.make_image(fill_color="black", back_color="white")
     if not output_file:
-        ext = '.zip.png' if compress and used_zip else '.png'
+        ext = '.qr.zip.png' if compress and used_zip else '.qr.png'
         output_file = os.path.splitext(input_file)[0] + ext
     img.save(output_file)
     logging.info(f"QR code saved to {output_file}")

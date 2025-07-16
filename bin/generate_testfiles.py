@@ -1,21 +1,20 @@
 import os
-import random
 import sys
-sys.path.insert(0, os.path.dirname(__file__))
+from PIL import Image
 import qrembed
 
-sizes = [10, 100, 1000, 10000, 100000, 1000000, 10000000]
+sizes = [32, 64, 128, 256, 384, 512]
 
-methods = [
-    'datamatrix',
-    'qr',
-]
+methods = ['qr', 'datamatrix']
 
-ASCII_CHARS = ''.join([chr(i) for i in range(32, 127)])  # printable ASCII
+SRC_IMG = 'mandrill.tiff'
 
-def generate_random_file(filename, size):
-    with open(filename, 'w', encoding='ascii') as f:
-        f.write(''.join(random.choices(ASCII_CHARS, k=size)))
+# Generate scaled images
+
+def generate_scaled_image(filename, size):
+    with Image.open(SRC_IMG) as img:
+        img = img.resize((size, size), Image.LANCZOS)
+        img.save(filename, format='JPEG')
 
 def try_embed(filename, method):
     try:
@@ -33,9 +32,9 @@ if __name__ == '__main__':
     for method in methods:
         print(f'\nTesting method: {method}')
         for size in sizes:
-            filename = f'testfile_{size}B.txt'
-            generate_random_file(filename, size)
-            print(f'Generated {filename} ({size} bytes)')
+            filename = f'mandrill_{size}px.jpg'
+            generate_scaled_image(filename, size)
+            print(f'Generated {filename} ({size}x{size})')
             if not try_embed(filename, method):
-                print(f'Stopping {method} at {size} bytes')
+                print(f'Stopping {method} at {size}px')
                 break
