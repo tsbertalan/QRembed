@@ -6,6 +6,7 @@ import io
 import zipfile
 import subprocess
 import tempfile
+import shutil
 
 try:
     from pylibdmtx.pylibdmtx import encode as dmtx_encode
@@ -106,11 +107,22 @@ def main():
     if args.chunked:
         chunk_files = create_7z_volumes(args.input_path, args.chunk_size)
         logging.info(f'Wrote {len(chunk_files)} 7z volume files.')
+        png_files = []
         for cf in chunk_files:
+            output_file = cf + f'.{args.method}.png'
             if args.method == 'qr':
-                file_to_qr(cf, None, compress=False)
+                file_to_qr(cf, output_file, compress=False)
             elif args.method == 'datamatrix':
-                file_to_datamatrix(cf, None, compress=False)
+                file_to_datamatrix(cf, output_file, compress=False)
+            png_files.append(output_file)
+        # Move PNGs to parent dir of input_path
+        parent_dir = os.path.dirname(os.path.abspath(args.input_path))
+        for png in png_files:
+            dest = os.path.join(parent_dir, os.path.basename(png))
+            if os.path.exists(dest):
+                os.remove(dest)
+            shutil.move(png, dest)
+            logging.info(f'Moved {png} to {dest}')
     else:
         if args.method == 'qr':
             file_to_qr(args.input_path, args.output, compress=True)
