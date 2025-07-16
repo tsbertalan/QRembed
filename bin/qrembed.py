@@ -103,6 +103,7 @@ def main():
     parser.add_argument('--method', choices=['qr', 'datamatrix'], default='qr', help='Encoding method: qr or datamatrix (default: qr)')
     parser.add_argument('--chunked', action='store_true', help='Enable chunked archive mode (split file/dir into 7z volumes for multiple codes)')
     parser.add_argument('--chunk-size', type=int, default=2900, help='Chunk size in bytes (default: 2900 for QR, required for --chunked)')
+    parser.add_argument('--retain-zips', action='store_true', help='Move 7z volume files to the target parent directory after encoding')
     args = parser.parse_args()
     if args.chunked:
         chunk_files = create_7z_volumes(args.input_path, args.chunk_size)
@@ -123,6 +124,13 @@ def main():
                 os.remove(dest)
             shutil.move(png, dest)
             logging.info(f'Moved {png} to {dest}')
+        if args.retain_zips:
+            for cf in chunk_files:
+                dest = os.path.join(parent_dir, os.path.basename(cf))
+                if os.path.exists(dest):
+                    os.remove(dest)
+                shutil.move(cf, dest)
+                logging.info(f'Moved {cf} to {dest}')
     else:
         if args.method == 'qr':
             file_to_qr(args.input_path, args.output, compress=True)
