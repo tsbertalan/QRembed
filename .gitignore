@@ -1,0 +1,17 @@
+*.pyc
+*.npz
+*.mp4
+.project
+.pydevproject
+*.orig
+*~
+*.unison*
+*.pyo
+*.aux
+*.log
+*.swp
+**/.trash/*
+**/data/*
+local
+testfile_*
+mandrill_*
