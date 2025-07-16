@@ -2,7 +2,7 @@
 "project name": "QRembed",
 "blurb": "Embed files into possibly multipart QR codes",
 "hero image": "doc/qrencode_hero.png",
-"description": "QRembed",
+"description": "QRembed.md",
 "starred": 0,
 "skip project": false,
 "extra files": [],
